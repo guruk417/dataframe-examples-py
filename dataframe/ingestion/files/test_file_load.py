@@ -36,6 +36,10 @@ if __name__ == '__main__':
     fin_df = spark.read()\
             .option("header", "false")\
             .option("delimiter",',')\
-            .format("csv")
-            .load("s3a:\\" + app_conf["s3_conf"]["s3_bucket"])
+            .format("csv")\
+            .load("s3a:\\" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+
+    fin_df.printSchema()
+    fin_df.show()
+
     spark.stop()
