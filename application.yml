@@ -32,7 +32,6 @@ spark_sql_demo:
     from
         agg_finances
 
-
   case_when_demo: >
     select
         company,
