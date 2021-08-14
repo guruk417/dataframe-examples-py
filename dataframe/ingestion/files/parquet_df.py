@@ -67,7 +67,7 @@ if __name__ == '__main__':
         .withColumn("OMODailyFreq", F.count("OMOID").over(window_spec))
 
     print("# of partitions in window'ed OM dataframe = " + str(omo_daily_freq.count()))
-    omo_daily_freq.show(5)
+    omo_daily_freq.show(25)
 
     omo_daily_freq.select("OMOCreateDate", "OMODailyFreq") \
         .distinct() \
@@ -82,3 +82,7 @@ if __name__ == '__main__':
     spark.stop()
 
 # spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/files/parquet_df.py
+# spark-submit --num-executor 30 --executor-core 5 --executor-memory 15g --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/files/parquet_df.py
+# with 10+1 node cluster each with 16 vCPU and 64 GB RAM
+# 1 vCPU and 1 GB RAM for the OS and others, 25% of RAM for off heap, 15 GB
+# 3 exec on each machine with 5 CPU, 16 GB
