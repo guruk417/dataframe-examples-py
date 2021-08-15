@@ -47,6 +47,8 @@ if __name__ == '__main__':
         .groupBy("has_debt") \
         .sum("income")
 
+    tot_debt = tot_debt \
+        .withColumnRenamed("sum(income)", "total income")
     tot_debt.show()
     spark.stop()
 
