@@ -4,11 +4,11 @@ import os.path
 import yaml
 
 if __name__ == '__main__':
-    spark = SparkSession\
-            .builder\
-            .appName('Test File Load')\
-            .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4')\
-            .getOrCreate()
+    spark = SparkSession \
+        .builder \
+        .appName('Test File Load') \
+        .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
+        .getOrCreate()
 
     spark.sparkContext.setLogLevel('ERROR')
 
