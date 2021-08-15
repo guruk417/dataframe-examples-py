@@ -33,11 +33,12 @@ if __name__ == '__main__':
         .add("has_student_loans", BooleanType(), True) \
         .add("income", DoubleType(), True)
 
-    fin_df = spark.read() \
+    fin_df = spark.read \
         .option("header", "false") \
-        .option("delimiter", ',') \
+        .option("delimiter", ",") \
         .format("csv") \
-        .load("s3a:\\" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+        .schema(fin_schema) \
+        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     fin_df.printSchema()
     fin_df.show()
