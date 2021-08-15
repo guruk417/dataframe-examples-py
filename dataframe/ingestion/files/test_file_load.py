@@ -53,6 +53,6 @@ if __name__ == '__main__':
     spark.stop()
 
     tot_debt = tot_debt \
-        .filter("has_debt" == True and "has_student_loans" == True)
+        .filter("has_debt" == "true" and "has_student_loans" == "True")
 
 # spark-submit --master yarn --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/files/test_file_load
