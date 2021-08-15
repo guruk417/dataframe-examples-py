@@ -43,6 +43,11 @@ if __name__ == '__main__':
     fin_df.printSchema()
     fin_df.show()
 
+    tot_debt = fin_df \
+        .groupBy("has_debt") \
+        .sum("income")
+
+    tot_debt.show()
     spark.stop()
 
 # spark-submit --master yarn --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/files/test_file_load
