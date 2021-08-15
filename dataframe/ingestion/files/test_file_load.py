@@ -27,7 +27,7 @@ if __name__ == '__main__':
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
     fin_schema = StructType()\
-                 .add('id',IntergerType(),True)\
+                 .add('id',IntegerType(),True)\
                  .add("has_debt", BooleanType(), True) \
                  .add("has_financial_dependents", BooleanType(), True) \
                  .add("has_student_loans", BooleanType(), True) \
@@ -43,3 +43,5 @@ if __name__ == '__main__':
     fin_df.show()
 
     spark.stop()
+
+# spark-submit --master yarn --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/ingestion/files/test_file_load
