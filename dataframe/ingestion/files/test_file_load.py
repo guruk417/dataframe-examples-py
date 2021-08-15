@@ -26,18 +26,18 @@ if __name__ == '__main__':
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
-    fin_schema = StructType()\
-                 .add('id',IntegerType(),True)\
-                 .add("has_debt", BooleanType(), True) \
-                 .add("has_financial_dependents", BooleanType(), True) \
-                 .add("has_student_loans", BooleanType(), True) \
-                 .add("income", DoubleType(), True)
+    fin_schema = StructType() \
+        .add('id',  IntegerType(),  True) \
+        .add("has_debt", BooleanType(), True) \
+        .add("has_financial_dependents", BooleanType(), True) \
+        .add("has_student_loans", BooleanType(), True) \
+        .add("income", DoubleType(), True)
 
-    fin_df = spark.read()\
-            .option("header", "false")\
-            .option("delimiter",',')\
-            .format("csv")\
-            .load("s3a:\\" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+    fin_df = spark.read() \
+        .option("header", "false") \
+        .option("delimiter", ',') \
+        .format("csv") \
+        .load("s3a:\\" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     fin_df.printSchema()
     fin_df.show()
