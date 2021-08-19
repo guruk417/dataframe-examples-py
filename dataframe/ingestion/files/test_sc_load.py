@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 import os.path
 import yaml
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, when
 from pyspark.sql.types import StructType, IntegerType, StringType
 
 if __name__ == '__main__':
@@ -41,7 +41,9 @@ if __name__ == '__main__':
         .option('header', 'true') \
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
     #        .schema(sc_schema) \
-    sc_read.select(col('SCA-STATE-NAME').alias('State'), col('SCA-COUNTY-NAME').alias('County')).show(10)
+    sc_read.select(col('SCA-STATE-NAME').alias('State'), col('SCA-COUNTY-NAME').alias('County')) \
+        .where(col('SCA-STATE-NAME') == 'ALABAMA').show()
+
     # print('Num Of Partition:' + str(sc_read.rdd.getNumPartitions()))
     # sc_read.groupBy('SCA-POSTAL-ID', 'SCA-COUNTY-NAME').count().show()
     # Write dataframe into output file
