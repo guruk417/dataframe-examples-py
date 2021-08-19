@@ -31,17 +31,17 @@ if __name__ == '__main__':
     sc_schema = StructType() \
         .add('SCA-POSTAL-ID', IntegerType(), True) \
         .add('SCA-STATE-NAME', StringType(), True) \
-        .add('SCA-COUNTY-CODE', StringType(), True) \
+        .add('SCA-COUNTY-CODE', IntegerType(), True) \
         .add('SCA-COUNTY-NAME', StringType(), True) \
         .add('SCA-STATE-CODE', StringType(), True)
 
     sc_read = spark \
         .read \
-        .option('header','true') \
+        .option('header', 'true') \
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
     #        .schema(sc_schema) \
     sc_read.show(5)
     print('Num Of Partition:' + str(sc_read.rdd.getNumPartitions()))
-    sc_read.groupBy('SCA-POSTAL-ID').sum('SCA-COUNTY-CODE').show(10)
+    sc_read.groupBy('SCA-POSTAL-ID', 'SCA-COUNTY-NAME').count().show()
     # Stop Spark Session
     spark.stop()
