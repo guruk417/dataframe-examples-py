@@ -38,9 +38,8 @@ if __name__ == '__main__':
     sc_read = spark \
         .read \
         .option('header','true') \
-        .schema(sc_schema) \
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
-
+    #        .schema(sc_schema) \
     sc_read.show(5)
     sc_read.rdd.getNumPartitions()
     # Stop Spark Session
