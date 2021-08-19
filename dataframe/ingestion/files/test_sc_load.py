@@ -39,7 +39,7 @@ if __name__ == '__main__':
         .read \
         .option('header','false') \
         .schema(sc_schema) \
-        .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB")
+        .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
 
     sc_read.getNumPartition()
     # Stop Spark Session
