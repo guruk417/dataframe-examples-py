@@ -42,7 +42,6 @@ if __name__ == '__main__':
     #        .schema(sc_schema) \
     sc_read.show(5)
     sc_read.rdd.getNumPartitions()
-    sc_read.groupBy('SCA-POSTAL-ID').count('SCA-COUNTY-NAME').alias('NumOfCounties')
-
+    sc_read.groupBy('SCA-POSTAL-ID').count('SCA-COUNTY-NAME')
     # Stop Spark Session
     spark.stop()
