@@ -10,7 +10,7 @@ if __name__ == '__main__':
         .appName('test sc file load') \
         .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
         .getOrCreate()
-
+    #        .master('local[*]') \
     spark.sparkContext.setLogLevel('Error')
     # Define current path of application config path and secrets path
     current_dir = os.path.abspath(os.path.dirname(__file__))
