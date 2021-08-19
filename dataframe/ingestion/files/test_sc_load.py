@@ -43,5 +43,12 @@ if __name__ == '__main__':
     sc_read.show(5)
     print('Num Of Partition:' + str(sc_read.rdd.getNumPartitions()))
     sc_read.groupBy('SCA-POSTAL-ID', 'SCA-COUNTY-NAME').count().show()
+    # Write dataframe into output file
+    sc_read\
+        .write\
+        .partitionBy('SCA-POSTAL-ID')\
+        .option('header', 'true')\
+        .option('delimiter', '|')\
+        .mode('overwrite').csv("s3a://" + app_conf['s3_conf']['s3_bucket']+ "/scop")
     # Stop Spark Session
     spark.stop()
