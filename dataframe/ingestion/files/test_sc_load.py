@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     sc_read = spark \
         .read \
-        .option('header','false') \
+        .option('header','true') \
         .schema(sc_schema) \
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
 
