@@ -41,6 +41,6 @@ if __name__ == '__main__':
         .schema(sc_schema) \
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
 
-    sc_read.rdd.getNumPartition()
+    sc_read.rdd.getNumPartitions()
     # Stop Spark Session
     spark.stop()
