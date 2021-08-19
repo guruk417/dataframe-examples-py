@@ -24,7 +24,7 @@ if __name__ == '__main__':
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
     # Set up to use S3
-    hadoop_conf = spark.SparkContext._jsc.hadoopConfiguration()
+    hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
