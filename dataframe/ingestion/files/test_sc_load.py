@@ -41,7 +41,7 @@ if __name__ == '__main__':
         .csv("s3a://" + app_conf['s3_conf']['s3_bucket'] + "/SC_DB.csv")
     #        .schema(sc_schema) \
     sc_read.show(5)
-    sc_read.rdd.getNumPartitions()
-    sc_read.groupBy('SCA-POSTAL-ID').count()
+    print('Num Of Partition:' + sc_read.rdd.getNumPartitions())
+    sc_read.groupBy('SCA-POSTAL-ID').sum('SCA-COUNTY-CODE').show(10)
     # Stop Spark Session
     spark.stop()
