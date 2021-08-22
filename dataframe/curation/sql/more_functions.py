@@ -66,4 +66,4 @@ if __name__ == '__main__':
         .show()
     '''
     spark.stop()
-# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/curation/dsl/more_functions.py
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/curation/sql/more_functions.py
