@@ -23,6 +23,8 @@ if __name__ == '__main__':
     people_df.createOrReplaceTempView("people")
     spark.sql("SELECT firstName, avg(weightInLbs) FROM people group by firstName").show()
     spark.sql('''select trim(lower(firstName)) as first, avg(weightInLbs) as weightLbs from people 
+                 group by first''').show()
+    spark.sql('''select trim(lower(firstName)) as first, avg(weightInLbs) as weightLbs from people 
                 group by first order by weightLbs''').show()
     '''
     people_df.groupBy("firstName").agg(first("weightInLbs")).show()
