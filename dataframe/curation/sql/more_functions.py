@@ -25,7 +25,7 @@ if __name__ == '__main__':
     spark.sql('''select trim(lower(firstName)) as first, avg(weightInLbs) as weightLbs from people 
                  group by first''').show()
     spark.sql('''select trim(lower(firstName)) as first, avg(weightInLbs) as weightLbs from people 
-                group by first order by weightLbs''').show()
+                group by first order by weightLbs desc''').show()
     '''
     people_df.groupBy("firstName").agg(first("weightInLbs")).show()
     people_df.groupBy(trim(lower(col('firstName')))).agg(first("weightInLbs")).show()
