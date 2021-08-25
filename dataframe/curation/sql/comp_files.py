@@ -32,7 +32,10 @@ if __name__ == '__main__':
         csv(dep_delays_path)
     dep_delays_df.createOrReplaceTempView('departure')
     spark.sql('''
-        select * from departure
+        select * from departure 
+        where origin = 'SFO' and destination = 'ORD'
+        and delay >= 120 
+        order by delay desc
     ''').show(10)
     spark.stop()
 # spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/curation/sql/comp_files.py
