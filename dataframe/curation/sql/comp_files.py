@@ -8,10 +8,11 @@ if __name__ == '__main__':
         .appName('SparkSQL') \
         .getOrCreate()
 
-    curr_dir = os.path.abspath(os.path.dirname(__file__))
-    app_config_path = os.path.abspath(curr_dir + "/../../../" + "application.yml")
-    app_secrets_path = os.path.abspath(curr_dir + "/../../../" + "secrets.yml")
-    #
+    spark.sparkContext.setLogLevel('ERROR')
+    current_dir = os.path.abspath(os.path.dirname(__file__))
+    app_config_path = os.path.abspath(current_dir + "/../../../"+"application.yml")
+    app_secrets_path = os.path.abspath(current_dir + "/../../../" + ".secrets")
+
     conf = open(app_config_path)
     app_conf = yaml.load(conf, Loader=yaml.FullLoader)
     secret = open(app_secrets_path)
