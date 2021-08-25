@@ -25,7 +25,11 @@ if __name__ == '__main__':
 
     dep_delays_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/departuredelays.csv"
     #hi
-    dep_delays_df = spark.read.option("header", "true").csv(dep_delays_path)
+    dep_delays_df = spark.\
+        read.\
+        option("header", "true").\
+        option("inferSchema", "true").\
+        csv(dep_delays_path)
     dep_delays_df.createOrReplaceTempView('departure')
     spark.sql('''
         select * from departure
