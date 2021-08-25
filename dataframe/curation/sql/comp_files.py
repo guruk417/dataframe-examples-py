@@ -25,9 +25,10 @@ if __name__ == '__main__':
 
     dep_delays_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/departuredelays.csv"
     #hi
-    dep_delays_df = spark.read.csv(dep_delays_path)
+    dep_delays_df = spark.read.option("header", "true").csv(dep_delays_path)
     dep_delays_df.createOrReplaceTempView('departure')
     spark.sql('''
         select * from departure
     ''').show(10)
     spark.stop()
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/curation/sql/comp_files.py
