@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 import os
 import yaml
-from pyspark.sql.functions import col, countDistinct, count
+from pyspark.sql.functions import col, countDistinct, count, expr
 
 if __name__ != "__main__":
     # Create spark session
@@ -43,4 +43,13 @@ if __name__ != "__main__":
 
     sales_file.groupBy(col("product_id")).agg(
         count("*").alias("cnt")).orderBy(col("cnt").desc()).limit(1).show()
+
+    sales_file.groupBy(col("date").agg(
+        countDistinct(col("product_id")).alias("num_product"))).orderBy(col("num_product").desc()).show()
+
+
+     sales_file\
+         .join(prod_file, sales_file.product_id == prod_file.product_id, "inner")\
+         .withColumn("Avg_Rev", expr())
+
     spark.stop()
