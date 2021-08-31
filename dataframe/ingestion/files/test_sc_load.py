@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 import os
 import yaml
-from pyspark.sql.functions import col, countDistinct
+from pyspark.sql.functions import col, countDistinct, count
 
 if __name__ != "__main__":
     # Create spark session
@@ -40,4 +40,7 @@ if __name__ != "__main__":
     print("Num Of sells {}".format(sells_file.count()))
 
     print("Num of Product Sold atleast {}".format(sales_file.agg(countDistinct(col("product_id")))))
+
+    sales_file.groupBy(col("product_id")).agg(
+        count("*").alias("cnt")).orderBy(col("cnt").desc()).limit(1).show()
     spark.stop()
