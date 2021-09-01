@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 import os
 import yaml
-from pyspark.sql.functions import col, countDistinct, count, expr
+from pyspark.sql.functions import col, countDistinct, count, expr, avg
 
 if __name__ != "__main__":
     # Create spark session
@@ -49,6 +49,6 @@ if __name__ != "__main__":
 
     sales_file \
         .join(prod_file, sales_file.product_id == prod_file.product_id, "inner") \
-        .withColumn("Avg_Rev", expr())
+        .withColumn("Avg_Rev", expr(avg(sales_file.num_pieces_sold * prod_file.price))).show()
 
     spark.stop()
