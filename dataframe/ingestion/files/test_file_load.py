@@ -28,7 +28,10 @@ if __name__ == '__main__':
 
     sells_file = spark \
         .read \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+        .option("header", "true") \
+        .option("inferSchema", "true") \
+        .format("csv") \
+        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     print("Num Of sells {}".format(sells_file.count()))
 '''
