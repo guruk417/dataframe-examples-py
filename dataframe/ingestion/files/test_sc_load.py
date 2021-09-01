@@ -23,32 +23,7 @@ if __name__ != "__main__":
         .read \
         .option("header", "true") \
         .option("inferSchema", "true") \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/sellers.csv")
-    prod_file = spark \
-        .read \
-        .option("header", "true") \
-        .option("interSchema", "true") \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/prod.csv")
-    sales_file = spark \
-        .read \
-        .option("header", "true") \
-        .option("interSchema", "true") \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/sales.csv")
-
-    print("Num Of orders {}".format(sales_file.count()))
-    print("Num of products {}").format(prod_file.count())
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
     print("Num Of sells {}".format(sells_file.count()))
-
-    print("Num of Product Sold atleast {}".format(sales_file.agg(countDistinct(col("product_id")))))
-
-    sales_file.groupBy(col("product_id")).agg(
-        count("*").alias("cnt")).orderBy(col("cnt").desc()).limit(1).show()
-
-    sales_file.groupBy(col("date").agg(
-        countDistinct(col("product_id")).alias("num_product"))).orderBy(col("num_product").desc()).show()
-
-    sales_file \
-        .join(prod_file, sales_file.product_id == prod_file.product_id, "inner") \
-        .withColumn("Avg_Rev", expr(avg(sales_file.num_pieces_sold * prod_file.price))).show()
 
     spark.stop()
