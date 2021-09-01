@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     sells_file = spark \
         .read \
-        .parquet("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     print("Num Of sells {}".format(sells_file.count()))
 '''
