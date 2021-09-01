@@ -31,7 +31,7 @@ if __name__ == '__main__':
         .option("header", "true") \
         .option("inferSchema", "true") \
         .format("csv") \
-        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/sells.csv")
+        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/sellers.csv")
 
     print("Num Of sells {}".format(sells_file.count()))
 '''
