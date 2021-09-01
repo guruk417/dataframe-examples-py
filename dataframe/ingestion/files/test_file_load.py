@@ -37,7 +37,7 @@ if __name__ == '__main__':
         .read \
         .option("header", "true") \
         .option("interSchema", "true") \
-        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/prod.csv")
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/products.csv")
     sales_file = spark \
         .read \
         .option("header", "true") \
