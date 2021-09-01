@@ -59,7 +59,7 @@ if __name__ == '__main__':
         countDistinct(col("product_id")).alias("num_product")).orderBy(col("num_product").desc()).show()
 
     sales_file \
-        .join(prod_file, sales_file.product_id == prod_file.product_id, "inner")
+        .join(prod_file, sales_file.product_id == prod_file.product_id, "inner").show()
 
     spark.stop()
 
