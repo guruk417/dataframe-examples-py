@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.types import StructType, IntegerType, BooleanType,DoubleType
 import os.path
 import yaml
@@ -26,6 +26,13 @@ if __name__ == '__main__':
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
+    sells_file = spark \
+        .read \
+        .option("header", "true") \
+        .option("inferSchema", "true") \
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
+    print("Num Of sells {}".format(sells_file.count()))
+'''
     fin_schema = StructType() \
         .add('id',  IntegerType(),  True) \
         .add("has_debt", BooleanType(), True) \
