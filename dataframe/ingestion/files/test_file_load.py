@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     sales_file \
         .join(prod_file, sales_file.product_id == prod_file.product_id, "inner")\
-        .agg(avg(sales_file.num_pieces_sold * prod_file.price)) \
+        .agg(avg(sales_file.num_pieces_sold * prod_file.price).alias("avg_sales")) \
         .show()
 
     spark.stop()
