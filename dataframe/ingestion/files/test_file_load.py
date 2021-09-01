@@ -59,7 +59,9 @@ if __name__ == '__main__':
         countDistinct(col("product_id")).alias("num_product")).orderBy(col("num_product").desc()).show()
 
     sales_file \
-        .join(prod_file, sales_file.product_id == prod_file.product_id, "inner").show()
+        .join(prod_file, sales_file.product_id == prod_file.product_id, "inner")\
+        .agg(avg(sales_file.num_pieces_sold * prod_file.price)) \
+        .show()
 
     spark.stop()
 
