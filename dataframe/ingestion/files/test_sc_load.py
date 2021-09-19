@@ -34,15 +34,14 @@ if __name__ == "__main__":
         .add("has_student_loan", BooleanType(), True)\
         .add("income", DoubleType(), True)
 
-    fin_read = spark\
+    fin_df = spark\
         .read\
         .option("header", False)\
         .option("delimiter", ",")\
         .format("csv")\
         .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
-    fin_write = spark\
-        .repartition(2)\
+    fin_df.repartition(2)\
         .write\
         .partitionBy("id")\
         .option("header", True)\
