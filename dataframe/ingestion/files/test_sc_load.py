@@ -46,7 +46,7 @@ if __name__ == "__main__":
         .partitionBy("id")\
         .option("header", True)\
         .option("delimiter", "~")\
-        .option("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/fin")
+        .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/fin")
 
     spark.stop()
 
