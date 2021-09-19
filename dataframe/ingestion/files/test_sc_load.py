@@ -44,11 +44,10 @@ if __name__ == "__main__":
 
     fin_df.repartition(2)\
         .write\
-        .partitionBy("id")\
         .option("header", True)\
         .option("delimiter", "~")\
         .mode("overwrite")\
         .csv("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/fin")
-
+    #    .partitionBy("id")\
     spark.stop()
 
