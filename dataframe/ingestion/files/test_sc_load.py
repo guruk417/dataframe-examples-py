@@ -1,31 +1,53 @@
 from pyspark.sql import SparkSession
-import os
 import yaml
-from pyspark.sql.functions import col, countDistinct, count, expr, avg
+import os
+from pyspark.sql.types import StructType, IntegerType, BooleanType, DoubleType
 
-if __name__ != "__main__":
-    # Create spark session
-    spark = SparkSession.builder.appName("Pyspark Example").getOrCreate()
+if __name__ == "__main__":
 
-    # Access application yaml file for configuration and secrete file
-    spark.sparkContext.setLogLevel('ERROR')
+    spark = SparkSession \
+        .builder \
+        .appName("Test File Load") \
+        .config('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:2.7.4') \
+        .getOrCreate()
+    #.master("local[*]") \
 
+            spark.sparkContext.setLogLevel('ERROR')
     current_dir = os.path.abspath(os.path.dirname(__file__))
-    app_config_path = os.path.abspath(current_dir + "/../../../../" + "application.yml")
-    app_secrets_path = os.path.abspath(current_dir + "/../../../../" + ".secrets")
+    app_config_path = os.path.abspath(current_dir + "/../../../" + "application.yml")
+    app_secrets_path = os.path.abspath(current_dir + "/../../../" + ".secrets")
 
     conf = open(app_config_path)
     app_conf = yaml.load(conf, Loader=yaml.FullLoader)
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
-    sells_file = spark \
-        .read \
-        .option("header", "true") \
-        .option("inferSchema", "true") \
-        .format("csv") \
-        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/sells.csv")
+    # Setup spark to use s3
+    hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+    hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
+    hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
-    print("Num Of sells {}".format(sells_file.count()))
+    fin_format = StructType()\
+        .add("id", IntegerType(), True)\
+        .add("has_debt", BooleanType(), True)\
+        .add("has_financial_dependents", BooleanType(), True)\
+        .add("has_student_loan", BooleanType(), True)\
+        .add("income", DoubleType(), True)
+
+    fin_read = spark\
+        .read\
+        .option("header", False)\
+        .option("delimiter", ",")\
+        .format("csv")\
+        .load("s3a://" + app_secret["s3_conf"]["access_key"] + "/finances.csv")
+
+    fin_write = spark\
+        .repartition(2)\
+        .write\
+        .partitionBy("id")\
+        .option("header", True)\
+        .option("delimiter", "~")\
+        .option("s3a://" + app_secret["s3_conf"]["access_key"] + "/fin")
 
     spark.stop()
+
