@@ -39,7 +39,7 @@ if __name__ == "__main__":
         .option("header", False)\
         .option("delimiter", ",")\
         .format("csv")\
-        .load("s3a://" + app_conf["s3_conf"]["access_key"] + "/finances.csv")
+        .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     fin_write = spark\
         .repartition(2)\
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         .partitionBy("id")\
         .option("header", True)\
         .option("delimiter", "~")\
-        .option("s3a://" + app_conf["s3_conf"]["access_key"] + "/fin")
+        .option("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/fin")
 
     spark.stop()
 
