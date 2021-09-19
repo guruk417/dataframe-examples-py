@@ -12,7 +12,7 @@ if __name__ == "__main__":
         .getOrCreate()
     #.master("local[*]") \
 
-            spark.sparkContext.setLogLevel('ERROR')
+    spark.sparkContext.setLogLevel('ERROR')
     current_dir = os.path.abspath(os.path.dirname(__file__))
     app_config_path = os.path.abspath(current_dir + "/../../../" + "application.yml")
     app_secrets_path = os.path.abspath(current_dir + "/../../../" + ".secrets")
