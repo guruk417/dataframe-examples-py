@@ -39,6 +39,7 @@ if __name__ == "__main__":
         .option("header", False)\
         .option("delimiter", ",")\
         .format("csv")\
+        .schema(fin_format)\
         .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
     fin_df.repartition(2)\
