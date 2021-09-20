@@ -47,7 +47,7 @@ if __name__ == "__main__":
         .show(10)
 
     # fin_avg = fin_df.groupBy(col("has_debt")).avg("income").alias("avg_income")
-    fin_avg = fin_df.avg("income")
+    fin_avg = fin_df.avg(col("income"))
     fin_df.withColumn("avg_income", lit(fin_avg)).show(10)
 
     fin_df.repartition(2) \
