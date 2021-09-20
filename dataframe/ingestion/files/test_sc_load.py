@@ -43,7 +43,7 @@ if __name__ == "__main__":
         .schema(fin_format) \
         .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
-    fin_df.filter((col("has_debt")) == True & (col("has_financial_dependents") == True)).show(10)
+    fin_df.filter((col("has_debt") == True) & (col("has_financial_dependents") == True)).show(10)
 
     fin_df.repartition(2) \
         .write \
