@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 import yaml
 import os
 
-from pyspark.sql.functions import col, avg
+from pyspark.sql.functions import col, avg, lit
 from pyspark.sql.types import StructType, IntegerType, BooleanType, DoubleType
 
 if __name__ == "__main__":
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     fin_df.groupBy(col("has_debt")).avg("income").alias("avg_income").show(10)
 
-    fin_df.withColumn("avg_income", avg("income")).show(10)
+    fin_df.withColumn("avg_income", lit(avg("income"))).show(10)
 
     fin_df.repartition(2) \
         .write \
