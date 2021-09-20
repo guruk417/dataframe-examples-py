@@ -46,9 +46,9 @@ if __name__ == "__main__":
     fin_df.filter((col("has_debt") == True) & (col("has_financial_dependents") == True)) \
         .show(10)
 
-    fin_df.groupBy(col("has_debt")).avg("income").alias("avg_income").show(10)
+    fin_avg = fin_df.groupBy(col("has_debt")).avg("income").alias("avg_income")
 
-    fin_df.withColumn("avg_income", lit(avg("income"))).show(10)
+    fin_df.withColumn("avg_income", lit(fin_avg)).show(10)
 
     fin_df.repartition(2) \
         .write \
