@@ -42,6 +42,8 @@ if __name__ == "__main__":
         .schema(fin_format)\
         .load("s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/finances.csv")
 
+    fin_df.show(10)
+
     fin_df.repartition(2)\
         .write\
         .option("header", True)\
